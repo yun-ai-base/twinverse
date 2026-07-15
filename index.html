@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🧬 孪生宇宙 · TwinVerse</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='80'>🧬</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Serif+SC:wght@400;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-deep: #0B0D0F;
+  --bg-surface: #131517;
+  --bg-elevated: #1A1D21;
+  --bg-hover: #212529;
+  --border: #2A2E33;
+  --border-light: #3A3F45;
+  --text-primary: #E8EAED;
+  --text-secondary: #9AA0A6;
+  --text-muted: #5F6368;
+  --accent: #7C8DFF;
+  --accent-soft: rgba(124,141,255,0.08);
+  --accent-glow: rgba(124,141,255,0.12);
+  --orange: #FF8C5A;
+  --green: #5AD99B;
+  --pink: #FF7EB3;
+  --cyan: #5AD4E6;
+  --radius: 12px;
+  --radius-sm: 8px;
+  --font-sans: 'Inter', -apple-system, sans-serif;
+  --font-serif: 'Noto Serif SC', Georgia, serif;
+  --font-mono: 'DM Mono', 'SF Mono', monospace;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: var(--bg-deep);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg-deep); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+/* Header */
+header {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 60px 24px 32px;
+  text-align: center;
+  position: relative;
+}
+
+header .logo {
+  font-size: 48px;
+  margin-bottom: 12px;
+  display: block;
+}
+
+header h1 {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 8px;
+}
+
+header h1 span { color: var(--accent); }
+
+header .subtitle {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  margin-bottom: 4px;
+}
+
+header .meta {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+}
+
+/* Stats bar */
+.stats-bar {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  padding: 16px 24px;
+  max-width: 960px;
+  margin: 0 auto;
+  flex-wrap: wrap;
+}
+
+.stat-item {
+  text-align: center;
+}
+
+.stat-item .num {
+  font-family: var(--font-mono);
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: var(--accent);
+  line-height: 1.2;
+}
+
+.stat-item .label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-top: 2px;
+}
+
+/* Loading */
+.loading {
+  text-align: center;
+  padding: 80px 24px;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+}
+
+.loading .spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin: 0 auto 16px;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Category sections */
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 24px 40px;
+}
+
+.category-section {
+  margin-bottom: 40px;
+  animation: fadeUp 0.5s ease forwards;
+  opacity: 0;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.category-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.category-header .cat-icon {
+  font-size: 20px;
+}
+
+.category-header h2 {
+  font-family: var(--font-serif);
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.category-header .cat-count {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  background: var(--bg-elevated);
+  padding: 2px 10px;
+  border-radius: 99px;
+}
+
+/* Project grid */
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 8px;
+}
+
+.project-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.25s ease;
+  position: relative;
+  cursor: pointer;
+}
+
+.project-card:hover {
+  background: var(--bg-hover);
+  border-color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(124,141,255,0.08);
+}
+
+.project-card .card-icon {
+  font-size: 28px;
+  margin-bottom: 12px;
+}
+
+.project-card h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: var(--text-primary);
+}
+
+.project-card p {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  flex: 1;
+}
+
+.project-card .card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 12px;
+}
+
+.project-card .card-tag {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  color: var(--text-muted);
+  background: var(--bg-elevated);
+  padding: 2px 8px;
+  border-radius: 4px;
+  letter-spacing: 0.03em;
+}
+
+.project-card .card-arrow {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  color: var(--text-muted);
+  font-size: 1rem;
+  transition: all 0.25s ease;
+  opacity: 0;
+  transform: translate(-4px, 4px);
+}
+
+.project-card:hover .card-arrow {
+  opacity: 1;
+  color: var(--accent);
+  transform: translate(0, 0);
+}
+
+/* Twin Universe section */
+#twin-universe {
+  max-width: 960px;
+  margin: 60px auto 0;
+  padding-top: 40px;
+  border-top: 1px solid var(--border);
+}
+
+#twin-universe .section-title {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-align: center;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+#twin-universe .section-subtitle {
+  font-size: 0.85rem;
+  text-align: center;
+  color: var(--text-secondary);
+  margin-bottom: 32px;
+}
+
+/* Override twin-universe.css for dark theme */
+.twin-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.tw-section-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 10px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--border);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.tw-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tw-card {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: var(--bg-surface);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  text-decoration: none;
+  transition: all 0.2s ease;
+  flex: 1;
+  min-width: 200px;
+  max-width: 380px;
+}
+
+.tw-card:hover {
+  border-color: var(--accent);
+  background: var(--bg-hover);
+  transform: translateY(-1px);
+}
+
+.tw-card-icon {
+  font-size: 20px;
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tw-card-info { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+
+.tw-card-name {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.3;
+}
+
+.tw-card-desc {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+  margin-top: 1px;
+}
+
+.tw-card-arrow {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+
+.tw-card:hover .tw-card-arrow {
+  color: var(--accent);
+  transform: translateX(2px);
+}
+
+/* Footer */
+footer {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 24px;
+  text-align: center;
+  border-top: 1px solid var(--border);
+  margin-top: 40px;
+}
+
+footer p {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  header { padding: 40px 16px 24px; }
+  header .logo { font-size: 36px; }
+  header h1 { font-size: clamp(1.5rem, 4vw, 2rem); }
+
+  .stats-bar { gap: 24px; }
+  .stat-item .num { font-size: 1.2rem; }
+
+  .container { padding: 0 16px 24px; }
+  .project-grid { grid-template-columns: 1fr; }
+  .category-header h2 { font-size: 1.1rem; }
+
+  .tw-card { min-width: 100%; max-width: 100%; }
+}
+
+@media (max-width: 480px) {
+  header { padding: 32px 12px 20px; }
+  .stats-bar { gap: 16px; padding: 12px; }
+  .project-card { padding: 16px; }
+  #twin-universe { margin-top: 40px; padding-top: 24px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <span class="logo">🧬</span>
+  <h1>孪生宇宙 <span>·</span> TwinVerse</h1>
+  <p class="subtitle">我的全部项目 · 自动同步</p>
+  <p class="meta" id="lastUpdated">—</p>
+</header>
+
+<div class="stats-bar">
+  <div class="stat-item">
+    <div class="num" id="totalCount">0</div>
+    <div class="label">Projects</div>
+  </div>
+  <div class="stat-item">
+    <div class="num" id="catCount">0</div>
+    <div class="label">Categories</div>
+  </div>
+  <div class="stat-item">
+    <div class="num" id="dataSource">—</div>
+    <div class="label">Data Source</div>
+  </div>
+</div>
+
+<div class="container" id="mainContent">
+  <div class="loading">
+    <div class="spinner"></div>
+    正在加载孪生宇宙数据…
+  </div>
+</div>
+
+<!-- 孪生宇宙导航 -->
+<section id="twin-universe">
+  <div class="section-title">🌌 探索更多</div>
+  <p class="section-subtitle">点击卡片跳转至各个项目</p>
+  <div class="twin-container" id="twin-container"></div>
+</section>
+
+<footer>
+  <p>Data from psychscope/projects.json · Automatically synced</p>
+</footer>
+
+<script>
+// --- 加载 projects.json ---
+async function loadProjects() {
+  try {
+    var res = await fetch('https://yun-ai-base.github.io/psychscope/projects.json');
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    var data = await res.json();
+    render(data);
+    renderTwinUniverse(data);
+    updateMeta(data);
+  } catch (e) {
+    document.getElementById('mainContent').innerHTML =
+      '<div class="loading" style="color:var(--orange)">⚠️ 数据加载失败: ' + e.message + '</div>';
+  }
+}
+
+// --- Categories 分类映射 ---
+var CATEGORY_MAP = {
+  ai:      { label: 'AI / 智能体',  icon: '🤖' },
+  content: { label: '内容精选',     icon: '📖' },
+  tool:    { label: '工具',        icon: '🛠️' },
+};
+var CAT_ORDER = ['ai', 'content', 'tool'];
+
+// --- 渲染项目卡片 ---
+function render(projects) {
+  var container = document.getElementById('mainContent');
+
+  // 按分类分组
+  var byCat = {};
+  projects.forEach(function (p) {
+    var cat = p.cat || 'tool';
+    (byCat[cat] = byCat[cat] || []).push(p);
+  });
+
+  var html = '';
+  CAT_ORDER.forEach(function (cat) {
+    var list = byCat[cat];
+    if (!list || list.length === 0) return;
+    var info = CATEGORY_MAP[cat] || { label: cat, icon: '📦' };
+
+    html += '<section class="category-section">';
+    html += '  <div class="category-header">';
+    html += '    <span class="cat-icon">' + info.icon + '</span>';
+    html += '    <h2>' + info.label + '</h2>';
+    html += '    <span class="cat-count">' + list.length + '</span>';
+    html += '  </div>';
+    html += '  <div class="project-grid">';
+
+    list.forEach(function (p, idx) {
+      var href = 'https://yun-ai-base.github.io/' + p.name + '/';
+      var delay = (idx * 0.05).toFixed(2);
+
+      html += '  <a class="project-card" href="' + href + '" target="_blank" rel="noopener" style="animation-delay:' + delay + 's">';
+      html += '    <span class="card-arrow">↗</span>';
+      html += '    <div class="card-icon">' + (p.icon || '📄') + '</div>';
+      html += '    <h3>' + p.name + '</h3>';
+      html += '    <p>' + (p.desc || '') + '</p>';
+      html += '  </a>';
+    });
+
+    html += '  </div>';
+    html += '</section>';
+  });
+
+  container.innerHTML = html;
+}
+
+// --- 渲染孪生宇宙导航（从 twin-universe.js 借用的逻辑）---
+function renderTwinUniverse(projects) {
+  var container = document.getElementById('twin-container');
+  if (!container) return;
+
+  // 排除自己（twinverse）
+  var filtered = projects.filter(function (p) { return p.name !== 'twinverse'; });
+
+  var byCat = {};
+  filtered.forEach(function (s) {
+    (byCat[s.cat] = byCat[s.cat] || []).push(s);
+  });
+
+  var html = '';
+  CAT_ORDER.forEach(function (cat) {
+    var list = byCat[cat];
+    if (!list) return;
+    var info = CATEGORY_MAP[cat] || { label: cat, icon: '📦' };
+    html += '<div class="tw-section">'
+      + '<div class="tw-section-title">' + info.icon + ' ' + info.label + '</div>'
+      + '<div class="tw-grid">';
+    list.forEach(function (s) {
+      html += '<a class="tw-card" href="https://yun-ai-base.github.io/' + s.name + '/" target="_blank" rel="noopener">'
+        + '<span class="tw-card-icon">' + (s.icon || '📄') + '</span>'
+        + '<span class="tw-card-info">'
+        + '<span class="tw-card-name">' + s.name + '</span>'
+        + '<span class="tw-card-desc">' + (s.desc || '') + '</span>'
+        + '</span>'
+        + '<span class="tw-card-arrow">→</span>'
+        + '</a>';
+    });
+    html += '</div></div>';
+  });
+  container.innerHTML = html;
+}
+
+// --- 更新统计 ---
+function updateMeta(projects) {
+  document.getElementById('totalCount').textContent = projects.length;
+
+  var cats = {};
+  projects.forEach(function (p) { cats[p.cat] = true; });
+  document.getElementById('catCount').textContent = Object.keys(cats).length;
+
+  document.getElementById('dataSource').textContent = 'psychscope';
+
+  document.getElementById('lastUpdated').textContent =
+    '更新于 ' + new Date().toISOString().slice(0, 10) + ' · 数据自动同步';
+}
+
+loadProjects();
+</script>
+
+</body>
+</html>
