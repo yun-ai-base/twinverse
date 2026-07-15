@@ -526,9 +526,8 @@ function renderTwinUniverse(projects) {
   var container = document.getElementById('twin-container');
   if (!container) return;
 
-  // 排除自己（twinverse）
-  var filtered = projects.filter(function (p) { return p.name !== 'twinverse'; });
-
+  // 孪生宇宙导航无需排除自身（twinverse 不在 project.json 中）
+  var filtered = projects;
   var byCat = {};
   filtered.forEach(function (s) {
     (byCat[s.cat] = byCat[s.cat] || []).push(s);
