@@ -86,37 +86,6 @@ header .meta {
   letter-spacing: 0.05em;
 }
 
-/* Stats bar */
-.stats-bar {
-  display: flex;
-  justify-content: center;
-  gap: 40px;
-  padding: 16px 24px;
-  max-width: 960px;
-  margin: 0 auto;
-  flex-wrap: wrap;
-}
-
-.stat-item {
-  text-align: center;
-}
-
-.stat-item .num {
-  font-family: var(--font-mono);
-  font-size: 1.6rem;
-  font-weight: 600;
-  color: var(--accent);
-  line-height: 1.2;
-}
-
-.stat-item .label {
-  font-size: 0.75rem;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  margin-top: 2px;
-}
-
 /* Loading */
 .loading {
   text-align: center;
@@ -287,9 +256,6 @@ footer p {
   header .logo { font-size: 36px; }
   header h1 { font-size: clamp(1.5rem, 4vw, 2rem); }
 
-  .stats-bar { gap: 24px; }
-  .stat-item .num { font-size: 1.2rem; }
-
   .container { padding: 0 16px 24px; }
   .project-grid { grid-template-columns: 1fr; }
   .category-header h2 { font-size: 1.1rem; }
@@ -297,7 +263,6 @@ footer p {
 
 @media (max-width: 480px) {
   header { padding: 32px 12px 20px; }
-  .stats-bar { gap: 16px; padding: 12px; }
   .project-card { padding: 16px; }
 }
 </style>
@@ -308,23 +273,8 @@ footer p {
   <span class="logo">🧬</span>
   <h1>孪生宇宙 <span>·</span> TwinVerse</h1>
   <p class="subtitle">我的全部项目 · 自动同步</p>
-  <p class="meta" id="lastUpdated">—</p>
 </header>
 
-<div class="stats-bar">
-  <div class="stat-item">
-    <div class="num" id="totalCount">0</div>
-    <div class="label">个项目</div>
-  </div>
-  <div class="stat-item">
-    <div class="num" id="catCount">0</div>
-    <div class="label">个分类</div>
-  </div>
-  <div class="stat-item">
-    <div class="num" id="dataSource">—</div>
-    <div class="label">数据源</div>
-  </div>
-</div>
 
 <div class="container" id="mainContent">
   <div class="loading">
@@ -359,7 +309,6 @@ async function loadProjects() {
     if (!res.ok) throw new Error('HTTP ' + res.status);
     var data = await res.json();
     render(data);
-    updateMeta(data);
   } catch (e) {
     document.getElementById('mainContent').innerHTML =
       '<div class="loading" style="color:var(--orange)">⚠️ 数据加载失败: ' + e.message + '</div>';
@@ -416,20 +365,6 @@ function render(projects) {
   });
 
   container.innerHTML = html;
-}
-
-// --- 更新统计 ---
-function updateMeta(projects) {
-  document.getElementById('totalCount').textContent = projects.length;
-
-  var cats = {};
-  projects.forEach(function (p) { cats[p.cat] = true; });
-  document.getElementById('catCount').textContent = Object.keys(cats).length;
-
-  document.getElementById('dataSource').textContent = 'projects.json';
-
-  document.getElementById('lastUpdated').textContent =
-    (new Date().toISOString().slice(0, 10)) + ' · 自动同步';
 }
 
 loadProjects();
