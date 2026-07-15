@@ -6,84 +6,80 @@
 <title>🧬 孪生宇宙 · TwinVerse</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='80'>🧬</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Serif+SC:wght@400;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Inter:wght@400;500&family=DM+Mono:wght@400&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg-deep: #0B0D0F;
-  --bg-surface: #131517;
-  --bg-elevated: #1A1D21;
-  --bg-hover: #212529;
-  --border: #2A2E33;
-  --border-light: #3A3F45;
-  --text-primary: #E8EAED;
-  --text-secondary: #9AA0A6;
-  --text-muted: #5F6368;
-  --accent: #7C8DFF;
-  --accent-soft: rgba(124,141,255,0.08);
-  --accent-glow: rgba(124,141,255,0.12);
-  --orange: #FF8C5A;
-  --green: #5AD99B;
-  --pink: #FF7EB3;
-  --cyan: #5AD4E6;
-  --radius: 12px;
-  --radius-sm: 8px;
-  --font-sans: 'Inter', -apple-system, sans-serif;
-  --font-serif: 'Noto Serif SC', Georgia, serif;
+  --bg: #F5F2ED;
+  --surface: #FFFFFF;
+  --surface-hover: #FAF8F5;
+  --border: #E8E4DE;
+  --border-light: #F0EDE8;
+  --text: #2C2A28;
+  --text-secondary: #8A8680;
+  --text-muted: #B8B4AE;
+  --accent: #8B7E6A;
+  --accent-light: rgba(139,126,106,0.08);
+  --accent-line: rgba(139,126,106,0.2);
+  --gold: #C4A87C;
+  --radius: 16px;
+  --radius-sm: 10px;
+  --shadow: 0 1px 3px rgba(44,42,40,0.04);
+  --shadow-hover: 0 8px 32px rgba(44,42,40,0.06);
+  --font-serif: 'Noto Serif SC', 'Georgia', serif;
+  --font-sans: 'Inter', -apple-system, 'PingFang SC', sans-serif;
   --font-mono: 'DM Mono', 'SF Mono', monospace;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
-  background: var(--bg-deep);
-  color: var(--text-primary);
+  background: var(--bg);
+  color: var(--text);
   font-family: var(--font-sans);
-  line-height: 1.6;
+  line-height: 1.7;
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
 }
 
-/* Scrollbar */
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: var(--bg-deep); }
-::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
-
 /* Header */
 header {
-  max-width: 960px;
+  max-width: 820px;
   margin: 0 auto;
-  padding: 60px 24px 32px;
+  padding: 72px 24px 20px;
   text-align: center;
-  position: relative;
 }
 
 header .logo {
-  font-size: 48px;
-  margin-bottom: 12px;
+  font-size: 44px;
   display: block;
+  margin-bottom: 16px;
+  filter: saturate(0.7);
 }
 
 header h1 {
   font-family: var(--font-serif);
-  font-size: clamp(2rem, 5vw, 3rem);
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
   font-weight: 700;
-  letter-spacing: -0.02em;
-  margin-bottom: 8px;
+  color: var(--text);
+  letter-spacing: 0.04em;
+  margin-bottom: 6px;
 }
 
-header h1 span { color: var(--accent); }
+header h1 span { color: var(--gold); }
 
 header .subtitle {
-  font-size: 1rem;
+  font-size: 0.9rem;
   color: var(--text-secondary);
-  margin-bottom: 4px;
+  letter-spacing: 0.06em;
 }
 
-header .meta {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  color: var(--text-muted);
-  letter-spacing: 0.05em;
+header::after {
+  content: '';
+  display: block;
+  width: 48px;
+  height: 2px;
+  background: var(--accent-line);
+  margin: 24px auto 0;
 }
 
 /* Loading */
@@ -91,140 +87,123 @@ header .meta {
   text-align: center;
   padding: 80px 24px;
   color: var(--text-muted);
-  font-family: var(--font-mono);
   font-size: 0.85rem;
 }
 
 .loading .spinner {
-  width: 32px;
-  height: 32px;
-  border: 3px solid var(--border);
+  width: 28px; height: 28px;
+  border: 2px solid var(--border);
   border-top-color: var(--accent);
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
-  margin: 0 auto 16px;
+  margin: 0 auto 14px;
 }
 
 @keyframes spin { to { transform: rotate(360deg); } }
 
-/* Category sections */
+/* Container */
 .container {
-  max-width: 960px;
+  max-width: 820px;
   margin: 0 auto;
-  padding: 0 24px 40px;
+  padding: 0 24px 48px;
 }
 
+/* Category sections */
 .category-section {
-  margin-bottom: 40px;
+  margin-bottom: 44px;
   animation: fadeUp 0.5s ease forwards;
   opacity: 0;
 }
 
 @keyframes fadeUp {
-  from { opacity: 0; transform: translateY(16px); }
+  from { opacity: 0; transform: translateY(12px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
 .category-header {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   margin-bottom: 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border-light);
 }
 
-.category-header .cat-icon {
-  font-size: 20px;
-}
+.category-header .cat-icon { font-size: 18px; }
 
 .category-header h2 {
   font-family: var(--font-serif);
-  font-size: 1.3rem;
+  font-size: 1rem;
   font-weight: 600;
-  color: var(--text-primary);
+  color: var(--text);
+  letter-spacing: 0.04em;
 }
 
 .category-header .cat-count {
   font-family: var(--font-mono);
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   color: var(--text-muted);
-  background: var(--bg-elevated);
-  padding: 2px 10px;
-  border-radius: 99px;
+  margin-left: auto;
 }
 
 /* Project grid */
 .project-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 8px;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 10px;
 }
 
 .project-card {
-  background: var(--bg-surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 20px;
-  text-decoration: none;
-  color: inherit;
   display: flex;
   flex-direction: column;
+  padding: 18px 20px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  color: inherit;
   transition: all 0.25s ease;
   position: relative;
-  cursor: pointer;
 }
 
 .project-card:hover {
-  background: var(--bg-hover);
   border-color: var(--accent);
+  box-shadow: var(--shadow-hover);
+  background: var(--surface-hover);
   transform: translateY(-2px);
-  box-shadow: 0 8px 32px rgba(124,141,255,0.08);
 }
 
-.project-card .card-icon {
-  font-size: 28px;
-  margin-bottom: 12px;
+.card-icon {
+  font-size: 24px;
+  margin-bottom: 10px;
+  line-height: 1;
 }
 
 .project-card h3 {
-  font-size: 1rem;
+  font-family: var(--font-serif);
+  font-size: 0.95rem;
   font-weight: 600;
-  margin-bottom: 6px;
-  color: var(--text-primary);
+  color: var(--text);
+  margin-bottom: 4px;
+  line-height: 1.4;
 }
 
 .project-card p {
-  font-size: 0.82rem;
+  font-size: 0.8rem;
   color: var(--text-secondary);
   line-height: 1.5;
   flex: 1;
 }
 
-.project-card .card-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-top: 12px;
-}
-
-.project-card .card-tag {
-  font-family: var(--font-mono);
-  font-size: 0.6rem;
-  color: var(--text-muted);
-  background: var(--bg-elevated);
-  padding: 2px 8px;
-  border-radius: 4px;
-  letter-spacing: 0.03em;
-}
-
-.project-card .card-arrow {
+.card-arrow {
   position: absolute;
   top: 16px;
   right: 16px;
+  font-size: 0.85rem;
   color: var(--text-muted);
-  font-size: 1rem;
-  transition: all 0.25s ease;
   opacity: 0;
   transform: translate(-4px, 4px);
+  transition: all 0.25s ease;
 }
 
 .project-card:hover .card-arrow {
@@ -235,35 +214,35 @@ header .meta {
 
 /* Footer */
 footer {
-  max-width: 960px;
+  max-width: 820px;
   margin: 0 auto;
   padding: 24px;
   text-align: center;
-  border-top: 1px solid var(--border);
-  margin-top: 40px;
+  border-top: 1px solid var(--border-light);
 }
 
 footer p {
   font-family: var(--font-mono);
-  font-size: 0.7rem;
+  font-size: 0.65rem;
   color: var(--text-muted);
   letter-spacing: 0.05em;
 }
 
 /* Responsive */
-@media (max-width: 768px) {
-  header { padding: 40px 16px 24px; }
+@media (max-width: 640px) {
+  header { padding: 48px 16px 16px; }
   header .logo { font-size: 36px; }
-  header h1 { font-size: clamp(1.5rem, 4vw, 2rem); }
+  header::after { margin-top: 18px; }
 
-  .container { padding: 0 16px 24px; }
+  .container { padding: 0 16px 32px; }
   .project-grid { grid-template-columns: 1fr; }
-  .category-header h2 { font-size: 1.1rem; }
+  .category-section { margin-bottom: 32px; }
 }
 
-@media (max-width: 480px) {
-  header { padding: 32px 12px 20px; }
-  .project-card { padding: 16px; }
+@media (max-width: 400px) {
+  header { padding: 36px 12px 12px; }
+  header h1 { font-size: 1.3rem; }
+  .project-card { padding: 14px 16px; }
 }
 </style>
 </head>
@@ -271,15 +250,14 @@ footer p {
 
 <header>
   <span class="logo">🧬</span>
-  <h1>孪生宇宙 <span>·</span> TwinVerse</h1>
+  <h1>孪生宇宙 · <span>TwinVerse</span></h1>
   <p class="subtitle">我的全部项目 · 自动同步</p>
 </header>
-
 
 <div class="container" id="mainContent">
   <div class="loading">
     <div class="spinner"></div>
-    正在加载孪生宇宙数据…
+    正在加载…
   </div>
 </div>
 
@@ -288,8 +266,7 @@ footer p {
 </footer>
 
 <script>
-// --- 项目中文名称映射 ---
-var PROJECT_NAMES = {
+const PROJECT_NAMES = {
   psychscope: '心理学大师图谱',
   sciomap: '科学星图',
   philomap: '哲学星球',
@@ -303,68 +280,52 @@ var PROJECT_NAMES = {
   'poetry-glory-world': '中国诗词人世界',
   'chinese-colors': '中国传统色彩'
 };
+
+const CATEGORY_MAP = {
+  ai:      { label: 'AI / 智能体', icon: '🤖' },
+  content: { label: '内容精选',    icon: '📖' },
+  tool:    { label: '工具',       icon: '🛠️' },
+};
+const CAT_ORDER = ['ai', 'content', 'tool'];
+
 async function loadProjects() {
   try {
-    var res = await fetch('https://yun-ai-base.github.io/psychscope/projects.json');
+    const res = await fetch('https://yun-ai-base.github.io/psychscope/projects.json');
     if (!res.ok) throw new Error('HTTP ' + res.status);
-    var data = await res.json();
-    render(data);
+    render(await res.json());
   } catch (e) {
     document.getElementById('mainContent').innerHTML =
-      '<div class="loading" style="color:var(--orange)">⚠️ 数据加载失败: ' + e.message + '</div>';
+      '<div class="loading" style="color:#B8B4AE">加载失败: ' + e.message + '</div>';
   }
 }
 
-// --- Categories 分类映射 ---
-var CATEGORY_MAP = {
-  ai:      { label: 'AI / 智能体',  icon: '🤖' },
-  content: { label: '内容精选',     icon: '📖' },
-  tool:    { label: '工具',        icon: '🛠️' },
-};
-var CAT_ORDER = ['ai', 'content', 'tool'];
-
-// --- 渲染项目卡片 ---
 function render(projects) {
-  var container = document.getElementById('mainContent');
+  const byCat = {};
+  projects.forEach(p => { (byCat[p.cat] = byCat[p.cat] || []).push(p); });
 
-  // 按分类分组
-  var byCat = {};
-  projects.forEach(function (p) {
-    var cat = p.cat || 'tool';
-    (byCat[cat] = byCat[cat] || []).push(p);
-  });
-
-  var html = '';
-  CAT_ORDER.forEach(function (cat) {
-    var list = byCat[cat];
-    if (!list || list.length === 0) return;
-    var info = CATEGORY_MAP[cat] || { label: cat, icon: '📦' };
-
-    html += '<section class="category-section">';
-    html += '  <div class="category-header">';
-    html += '    <span class="cat-icon">' + info.icon + '</span>';
-    html += '    <h2>' + info.label + '</h2>';
-    html += '    <span class="cat-count">' + list.length + '</span>';
-    html += '  </div>';
-    html += '  <div class="project-grid">';
-
-    list.forEach(function (p, idx) {
-      var href = 'https://yun-ai-base.github.io/' + p.name + '/';
-      var delay = (idx * 0.05).toFixed(2);
-
-      html += '  <a class="project-card" href="' + href + '" target="_blank" rel="noopener" style="animation-delay:' + delay + 's">';
-      html += '    <span class="card-arrow">↗</span>';
-      html += '    <div class="card-icon">' + (p.icon || '📄') + '</div>';
-      html += '    <h3>' + (PROJECT_NAMES[p.name] || p.name) + '</h3>';
-      html += '    <p>' + (p.desc || '') + '</p>';
-      html += '  </a>';
+  let html = '';
+  CAT_ORDER.forEach(cat => {
+    const list = byCat[cat];
+    if (!list) return;
+    const info = CATEGORY_MAP[cat];
+    html += '<section class="category-section">'
+      + '<div class="category-header">'
+      + '<span class="cat-icon">' + info.icon + '</span>'
+      + '<h2>' + info.label + '</h2>'
+      + '<span class="cat-count">' + list.length + '</span>'
+      + '</div>'
+      + '<div class="project-grid">';
+    list.forEach((p, i) => {
+      html += '<a class="project-card" href="https://yun-ai-base.github.io/' + p.name + '/" target="_blank" rel="noopener" style="animation-delay:' + (i * 0.05).toFixed(2) + 's">'
+        + '<span class="card-arrow">↗</span>'
+        + '<div class="card-icon">' + (p.icon || '📄') + '</div>'
+        + '<h3>' + (PROJECT_NAMES[p.name] || p.name) + '</h3>'
+        + '<p>' + (p.desc || '') + '</p>'
+        + '</a>';
     });
-
-    html += '  </div>';
-    html += '</section>';
+    html += '</div></section>';
   });
-
-  container.innerHTML = html;
+  document.getElementById('mainContent').innerHTML = html;
 }
 
 loadProjects();
