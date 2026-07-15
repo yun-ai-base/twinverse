@@ -264,112 +264,6 @@ header .meta {
   transform: translate(0, 0);
 }
 
-/* Twin Universe section */
-#twin-universe {
-  max-width: 960px;
-  margin: 60px auto 0;
-  padding-top: 40px;
-  border-top: 1px solid var(--border);
-}
-
-#twin-universe .section-title {
-  font-family: var(--font-serif);
-  font-size: 1.5rem;
-  font-weight: 700;
-  text-align: center;
-  color: var(--text-primary);
-  margin-bottom: 4px;
-}
-
-#twin-universe .section-subtitle {
-  font-size: 0.85rem;
-  text-align: center;
-  color: var(--text-secondary);
-  margin-bottom: 32px;
-}
-
-/* Override twin-universe.css for dark theme */
-.twin-container {
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-.tw-section-title {
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--text-secondary);
-  margin-bottom: 10px;
-  padding-bottom: 4px;
-  border-bottom: 1px solid var(--border);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-}
-
-.tw-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.tw-card {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px 14px;
-  background: var(--bg-surface);
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--border);
-  text-decoration: none;
-  transition: all 0.2s ease;
-  flex: 1;
-  min-width: 200px;
-  max-width: 380px;
-}
-
-.tw-card:hover {
-  border-color: var(--accent);
-  background: var(--bg-hover);
-  transform: translateY(-1px);
-}
-
-.tw-card-icon {
-  font-size: 20px;
-  flex-shrink: 0;
-  width: 36px;
-  height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.tw-card-info { flex: 1; min-width: 0; display: flex; flex-direction: column; }
-
-.tw-card-name {
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: var(--text-primary);
-  line-height: 1.3;
-}
-
-.tw-card-desc {
-  font-size: 0.7rem;
-  color: var(--text-muted);
-  line-height: 1.4;
-  margin-top: 1px;
-}
-
-.tw-card-arrow {
-  font-size: 0.85rem;
-  color: var(--text-muted);
-  flex-shrink: 0;
-  transition: all 0.2s ease;
-}
-
-.tw-card:hover .tw-card-arrow {
-  color: var(--accent);
-  transform: translateX(2px);
-}
-
 /* Footer */
 footer {
   max-width: 960px;
@@ -399,15 +293,12 @@ footer p {
   .container { padding: 0 16px 24px; }
   .project-grid { grid-template-columns: 1fr; }
   .category-header h2 { font-size: 1.1rem; }
-
-  .tw-card { min-width: 100%; max-width: 100%; }
 }
 
 @media (max-width: 480px) {
   header { padding: 32px 12px 20px; }
   .stats-bar { gap: 16px; padding: 12px; }
   .project-card { padding: 16px; }
-  #twin-universe { margin-top: 40px; padding-top: 24px; }
 }
 </style>
 </head>
@@ -423,15 +314,15 @@ footer p {
 <div class="stats-bar">
   <div class="stat-item">
     <div class="num" id="totalCount">0</div>
-    <div class="label">Projects</div>
+    <div class="label">个项目</div>
   </div>
   <div class="stat-item">
     <div class="num" id="catCount">0</div>
-    <div class="label">Categories</div>
+    <div class="label">个分类</div>
   </div>
   <div class="stat-item">
     <div class="num" id="dataSource">—</div>
-    <div class="label">Data Source</div>
+    <div class="label">数据源</div>
   </div>
 </div>
 
@@ -442,26 +333,32 @@ footer p {
   </div>
 </div>
 
-<!-- 孪生宇宙导航 -->
-<section id="twin-universe">
-  <div class="section-title">🌌 探索更多</div>
-  <p class="section-subtitle">点击卡片跳转至各个项目</p>
-  <div class="twin-container" id="twin-container"></div>
-</section>
-
 <footer>
-  <p>Data from psychscope/projects.json · Automatically synced</p>
+  <p>数据来自 psychscope/projects.json · 自动同步</p>
 </footer>
 
 <script>
-// --- 加载 projects.json ---
+// --- 项目中文名称映射 ---
+var PROJECT_NAMES = {
+  psychscope: '心理学大师图谱',
+  sciomap: '科学星图',
+  philomap: '哲学星球',
+  'writers-gallery': '百位作家画廊',
+  'morris-quotes': 'Morris 语录集',
+  'research-frontiers': '全球科研突破',
+  'cosmic-discussion': '宇宙大爆炸对话',
+  'being-towards-death': '向死而生',
+  'cognitive-biases-atlas': '认知偏见图谱',
+  'book-gallery': '我的书房',
+  'poetry-glory-world': '中国诗词人世界',
+  'chinese-colors': '中国传统色彩'
+};
 async function loadProjects() {
   try {
     var res = await fetch('https://yun-ai-base.github.io/psychscope/projects.json');
     if (!res.ok) throw new Error('HTTP ' + res.status);
     var data = await res.json();
     render(data);
-    renderTwinUniverse(data);
     updateMeta(data);
   } catch (e) {
     document.getElementById('mainContent').innerHTML =
@@ -509,7 +406,7 @@ function render(projects) {
       html += '  <a class="project-card" href="' + href + '" target="_blank" rel="noopener" style="animation-delay:' + delay + 's">';
       html += '    <span class="card-arrow">↗</span>';
       html += '    <div class="card-icon">' + (p.icon || '📄') + '</div>';
-      html += '    <h3>' + p.name + '</h3>';
+      html += '    <h3>' + (PROJECT_NAMES[p.name] || p.name) + '</h3>';
       html += '    <p>' + (p.desc || '') + '</p>';
       html += '  </a>';
     });
@@ -521,41 +418,6 @@ function render(projects) {
   container.innerHTML = html;
 }
 
-// --- 渲染孪生宇宙导航（从 twin-universe.js 借用的逻辑）---
-function renderTwinUniverse(projects) {
-  var container = document.getElementById('twin-container');
-  if (!container) return;
-
-  // 孪生宇宙导航无需排除自身（twinverse 不在 project.json 中）
-  var filtered = projects;
-  var byCat = {};
-  filtered.forEach(function (s) {
-    (byCat[s.cat] = byCat[s.cat] || []).push(s);
-  });
-
-  var html = '';
-  CAT_ORDER.forEach(function (cat) {
-    var list = byCat[cat];
-    if (!list) return;
-    var info = CATEGORY_MAP[cat] || { label: cat, icon: '📦' };
-    html += '<div class="tw-section">'
-      + '<div class="tw-section-title">' + info.icon + ' ' + info.label + '</div>'
-      + '<div class="tw-grid">';
-    list.forEach(function (s) {
-      html += '<a class="tw-card" href="https://yun-ai-base.github.io/' + s.name + '/" target="_blank" rel="noopener">'
-        + '<span class="tw-card-icon">' + (s.icon || '📄') + '</span>'
-        + '<span class="tw-card-info">'
-        + '<span class="tw-card-name">' + s.name + '</span>'
-        + '<span class="tw-card-desc">' + (s.desc || '') + '</span>'
-        + '</span>'
-        + '<span class="tw-card-arrow">→</span>'
-        + '</a>';
-    });
-    html += '</div></div>';
-  });
-  container.innerHTML = html;
-}
-
 // --- 更新统计 ---
 function updateMeta(projects) {
   document.getElementById('totalCount').textContent = projects.length;
@@ -564,10 +426,10 @@ function updateMeta(projects) {
   projects.forEach(function (p) { cats[p.cat] = true; });
   document.getElementById('catCount').textContent = Object.keys(cats).length;
 
-  document.getElementById('dataSource').textContent = 'psychscope';
+  document.getElementById('dataSource').textContent = 'projects.json';
 
   document.getElementById('lastUpdated').textContent =
-    '更新于 ' + new Date().toISOString().slice(0, 10) + ' · 数据自动同步';
+    (new Date().toISOString().slice(0, 10)) + ' · 自动同步';
 }
 
 loadProjects();
