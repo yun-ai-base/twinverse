@@ -283,6 +283,7 @@ const PROJECT_NAMES = {
   'ai-assistant-guide': 'AI 助手使用指南',
   'existence-probability': '存在概率论',
   '180day-plan': '180天跃迁计划',
+  'vpn-guide': 'VPN 选购指南',
 };
 
 const CATEGORY_MAP = {
@@ -296,7 +297,15 @@ async function loadProjects() {
   try {
     const res = await fetch('https://yun-ai-base.github.io/psychscope/projects.json');
     if (!res.ok) throw new Error('HTTP ' + res.status);
-    render(await res.json());
+    const data = await res.json();
+    // 本地挂载：仅孪生宇宙页面显示，不写入公共 projects.json；过期后自动撤下
+    const localPins = [
+      { name: 'vpn-guide', desc: '主流 VPN 横向测评与选购避坑指南', icon: '🌐', cat: 'tool',
+        expireAt: '2026-07-31T19:00:00' }
+    ];
+    const _now = Date.now();
+    localPins.forEach(p => { if (new Date(p.expireAt).getTime() > _now) data.push(p); });
+    render(data);
   } catch (e) {
     document.getElementById('mainContent').innerHTML =
       '<div class="loading" style="color:#B8B4AE">加载失败: ' + e.message + '</div>';
