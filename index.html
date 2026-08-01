@@ -285,13 +285,14 @@ const PROJECT_NAMES = {
   'honglou-mansion': '红楼梦大观园',
   'chinese-hall-of-fame': '中国历史群星',
   'existence-probability': '存在概率论',
-  '180day-plan': '180天跃迁计划'
+  '180day-plan': '180天跃迁计划',
+  'vpn-guide': 'VPN 选购指南'
 };
 
 const CATEGORY_MAP = {
   ai:      { label: 'AI / 智能体', icon: '🤖' },
   content: { label: '内容精选',    icon: '📖' },
-  tool:    { label: '工具',       icon: '🛠️' }
+  tool:    { label: '工具',       icon: '🛠️' },
 };
 const CAT_ORDER = ['ai', 'content', 'tool'];
 
@@ -326,7 +327,7 @@ function render(projects) {
       html += '<a class="project-card" href="https://yun-ai-base.github.io/' + p.name + '/" target="_blank" rel="noopener" style="animation-delay:' + (i * 0.05).toFixed(2) + 's">'
         + '<span class="card-arrow">↗</span>'
         + '<div class="card-icon">' + (p.icon || '📄') + '</div>'
-        + '<h3>' + (PROJECT_NAMES[p.name] || p.name) + '</h3>'
+        + '<h3>' + (p.zh || PROJECT_NAMES[p.name] || p.name) + '</h3>'
         + '<p>' + (p.desc || '') + '</p>'
         + '</a>';
     });
