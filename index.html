@@ -212,6 +212,21 @@ header::after {
   transform: translate(0, 0);
 }
 
+.card-badge {
+  display: inline-block;
+  margin-left: 6px;
+  vertical-align: 2px;
+  font-family: var(--font-sans);
+  font-size: 0.58rem;
+  font-weight: 500;
+  color: var(--accent);
+  border: 1px solid var(--accent-line);
+  border-radius: 4px;
+  padding: 0 5px;
+  letter-spacing: 0.08em;
+  line-height: 1.6;
+}
+
 /* Footer */
 footer {
   max-width: 820px;
@@ -298,6 +313,17 @@ const CATEGORY_MAP = {
 };
 const CAT_ORDER = ['ai', 'content', 'data', 'tool'];
 
+// 宝藏网站推荐 —— 非本人创作的外来优秀项目，硬编码维护
+const TREASURE_SITES = [
+  {
+    icon: '🌐',
+    zh: '世界的形状',
+    en: 'Shape of the World',
+    desc: '一个可玩的知识宇宙——宇宙、数学、物理、生物等科学知识都能亲手把玩：先碰一下，再看变化，最后带走一句「原来如此」。',
+    url: 'https://shapeof.world/'
+  }
+];
+
 async function loadProjects() {
   try {
     const res = await fetch('https://yun-ai-base.github.io/psychscope/projects.json');
@@ -305,7 +331,7 @@ async function loadProjects() {
     render(await res.json());
   } catch (e) {
     document.getElementById('mainContent').innerHTML =
-      '<div class="loading" style="color:#B8B4AE">加载失败: ' + e.message + '</div>';
+      treasureSection() + '<div class="loading" style="color:#B8B4AE">项目加载失败: ' + e.message + '</div>';
   }
 }
 
@@ -313,7 +339,7 @@ function render(projects) {
   const byCat = {};
   projects.forEach(p => { (byCat[p.cat] = byCat[p.cat] || []).push(p); });
 
-  let html = '';
+  let html = treasureSection();
   CAT_ORDER.forEach(cat => {
     const list = byCat[cat];
     if (!list) return;
@@ -336,6 +362,28 @@ function render(projects) {
     html += '</div></section>';
   });
   document.getElementById('mainContent').innerHTML = html;
+}
+
+// 宝藏网站推荐区块（外来优秀项目）
+function treasureSection() {
+  if (!TREASURE_SITES.length) return '';
+  let html = '<section class="category-section">'
+    + '<div class="category-header">'
+    + '<span class="cat-icon">💎</span>'
+    + '<h2>宝藏网站推荐</h2>'
+    + '<span class="cat-count">' + TREASURE_SITES.length + '</span>'
+    + '</div>'
+    + '<div class="project-grid">';
+  TREASURE_SITES.forEach((s, i) => {
+    html += '<a class="project-card" href="' + s.url + '" target="_blank" rel="noopener" style="animation-delay:' + (i * 0.05).toFixed(2) + 's">'
+      + '<span class="card-arrow">↗</span>'
+      + '<div class="card-icon">' + (s.icon || '💎') + '</div>'
+      + '<h3>' + (s.zh || s.en || '') + ' <span class="card-badge">外部</span></h3>'
+      + '<p>' + (s.desc || '') + '</p>'
+      + '</a>';
+  });
+  html += '</div></section>';
+  return html;
 }
 
 loadProjects();
